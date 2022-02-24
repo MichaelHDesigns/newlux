@@ -1451,7 +1451,7 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
         return 0;
 
     int blocktimeDownscaleFactor = consensusParams.BlocktimeDownscaleFactor(nHeight);
-    CAmount nSubsidy = 4 * COIN / blocktimeDownscaleFactor;
+    CAmount nSubsidy = 5000 * COIN / blocktimeDownscaleFactor;
     // Subsidy is cut in half every 985500 blocks which will occur approximately every 4 years.
     nSubsidy >>= halvings;
     return nSubsidy;
@@ -3559,7 +3559,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
     //only start checking this error after block 5000 and only on testnet and mainnet, not regtest
     if(pindex->nHeight > 5000 && !Params().MineBlocksOnDemand()) {
         //sanity check in case an exploit happens that allows new coins to be minted
-        if(pindex->nMoneySupply > (uint64_t)(100000000 + ((pindex->nHeight - 5000) * 4)) * COIN){
+        if(pindex->nMoneySupply > (uint64_t)(100000000 + ((pindex->nHeight - 5000) * 5000)) * COIN){
             return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "incorrect-money-supply", "ConnectBlock(): Unknown error caused actual money supply to exceed expected money supply");
         }
     }
